@@ -1,0 +1,31 @@
+
+<h1>SAMHINT</h1>
+<div id="drop_zone">Drop files here</div>
+<button onclick="clearAll()" id='clear'>Clear</button>
+<br />
+<span id="suppress-container">
+  Suppress Errors <input type="checkbox" id="suppress">
+</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="checkIt()" id='check'>Check</button>
+<br />
+<div id="list"></div>
+
+
+<style>
+  #drop_zone {
+    border: 2px dotted gray;
+    width: 55%;
+    height: 20%;
+    text-align: center;
+    padding-top: 5%;
+    color: gray;
+  }
+</style>
+
+<script src="jshint.js"></script>
+<script src="function_name_checker.js"></script>
+<script src="overridden_functions.js"></script>
+<script src="error_handling.js"></script>
+<script src="file_upload.js"></script>
+<script src="clear_and_check.js"></script>
