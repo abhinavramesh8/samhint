@@ -12,9 +12,17 @@ function handleFileSelect(evt) {
         JSHINT(e.target.result);
         var funcs = JSHINT.data().functions;
         var errs = JSHINT.data().errors;
+        var ast = esprima.parse(e.target.result, {loc: true});
         document.getElementById('list').innerHTML += (theFile.name+'<br />');
-        check_func_names(funcs, theFile.name);
+        //check_func_names(funcs, theFile.name);
         if(errs) checkForErrors(errs, theFile.name);
+        name_funcs(ast);
+        overriden_funcs(ast, theFile.name);
+        paramsMatcher(ast, theFile.name);
+        paramsUser(ast, theFile.name);
+        var leakCheck = document.getElementById('global_leaks').checked;
+        if(leakCheck) assgnChecker(ast, theFile.name);
+        //console.log(warnCalls);
       };
     })(f);
     reader.readAsText(f);
