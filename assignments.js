@@ -43,6 +43,7 @@ function checkForLeaks(assignments, scopeChain){
     if (!isVarDefined(assignments[i], scopeChain)){
       var str = "Global variable leak: " + varName + " " + " on line ";
       str += assignment.loc.start.line + " in file " + assgnFile;
+      str += '<br />'
       document.getElementById('list').innerHTML += str;
     }
   }
@@ -59,7 +60,7 @@ function isVarDefined(varname, scopeChain){
 }
 
 function assgnChecker(ast, srcFile) {
-  document.getElementById('list').innerHTML += "The following global variable leaks have been detected: <br />"
+  document.getElementById('list').innerHTML += "<br />The following global variable leaks have been detected: <br />"
   assgnFile = srcFile;
   traverse(ast, assgnProc, leaveProc);
 }

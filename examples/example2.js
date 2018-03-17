@@ -5,7 +5,7 @@ function main(a) {
 }
 
 function main(k) {
-  //j = 99;
+  j = 99;
 }
 
 function wooh(a) {
