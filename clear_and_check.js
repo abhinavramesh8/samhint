@@ -10,6 +10,7 @@ function clearAll() {
   assgnFile = undefined;
   funcList = {};
   overriden = {};
+  unsafeFuncUses = []
   document.getElementById('list').innerHTML = "";
   document.getElementById('check').style.display = "inline";
   document.getElementById('suppress-container').style.display = "inline";
@@ -25,14 +26,16 @@ function checkIt() {
   if(uploaded) {
     document.getElementById('check').style.display = "none";
     document.getElementById('suppress-container').style.display = "none";
-    var overCheck = document.getElementById('override_check').checked;
-    var unusedCheck = document.getElementById('unused_params').checked;
-    var wrongCheck = document.getElementById('mismatch_params').checked;
-    var uncalledCheck = document.getElementById('uncalled_funcs').checked;
-    if(overCheck) printOverridenFuncs();
-    if(unusedCheck) printUnused();
-    if(wrongCheck) printWrongCalls();
-    if(uncalledCheck) printNotCalled();
+    //var overCheck = document.getElementById('override_check').checked;
+    //var unusedCheck = document.getElementById('unused_params').checked;
+    //var wrongCheck = document.getElementById('mismatch_params').checked;
+    //var uncalledCheck = document.getElementById('uncalled_funcs').checked;
+    var securityCheck = document.getElementById('security_issues').checked;
+    //if(overCheck) printOverridenFuncs();
+    //if(unusedCheck) printUnused();
+    //if(wrongCheck) printWrongCalls();
+    //if(uncalledCheck) printNotCalled();
+    if(securityCheck) printUnsafe();
     //printOverridden();
     //printWrongCalls();
     //printUnused();

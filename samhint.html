@@ -6,6 +6,7 @@
 <span id="suppress-container">
   Suppress Errors <input type="checkbox" id="suppress">
   &nbsp;&nbsp;&nbsp;
+  <!--
   Overriden Functions <input type="checkbox" id="override_check">
   &nbsp;&nbsp;&nbsp;
   Unused parameters <input type="checkbox" id="unused_params">
@@ -15,6 +16,9 @@
   Global Variable Leaks <input type="checkbox" id="global_leaks">
   &nbsp;&nbsp;&nbsp;
   Uncalled functions <input type="checkbox" id="uncalled_funcs">
+  &nbsp;&nbsp;&nbsp;
+  -->
+  Security vulnerabilities <input type="checkbox" id="security_issues">
 </span>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button onclick="checkIt()" id='check'>Check</button>
@@ -46,5 +50,6 @@
 <script src="init.js"></script>
 <script src="function_overriding.js"></script>
 <script src="param_checker.js"></script>
+<script src="security.js"></script>
 <script src="file_upload.js"></script>
 <script src="clear_and_check.js"></script>
