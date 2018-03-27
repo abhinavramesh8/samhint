@@ -1,6 +1,7 @@
 function clearAll() {
   uploaded_file_names = {};
   all_function_names = {};
+  newFiles = {};
   overridden_func_names = {};
   all_errors = [];
   warnCalls = {};

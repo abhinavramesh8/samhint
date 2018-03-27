@@ -3,6 +3,7 @@ function handleFileSelect(evt) {
   evt.stopPropagation();
   evt.preventDefault();
   var files = evt.dataTransfer.files;
+  expFiles = files;
   for (var i = 0, f; f = files[i]; i++) {
     if(!f.type.match('javascript.*') || uploaded_file_names[f.name]) continue;
     uploaded_file_names[f.name] = true;
@@ -22,7 +23,9 @@ function handleFileSelect(evt) {
         //paramsUser(ast, theFile.name);
         //var leakCheck = document.getElementById('global_leaks').checked;
         //if(leakCheck) assgnChecker(ast, theFile.name);
-        unsafeFinder(ast, theFile.name);
+        if(document.getElementById('security_issues').checked) {
+          unsafeFinder(ast, theFile.name, e.target.result);
+        }
         //console.log(warnCalls);
       };
     })(f);
