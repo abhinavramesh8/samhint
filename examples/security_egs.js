@@ -1,5 +1,3 @@
-document.write("<HTML> Tags and markup");
-document.writeln("<HTML> Tags and markup");
 var x = 44;
 var a = {"cool": 77, "hi": 33};
 element.innerHTML = "<HTML> Tags and markup";

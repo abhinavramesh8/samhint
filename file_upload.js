@@ -4,11 +4,21 @@ function handleFileSelect(evt) {
   evt.preventDefault();
   var files = evt.dataTransfer.files;
   expFiles = files;
+  
   for (var i = 0, f; f = files[i]; i++) {
-    if(!f.type.match('javascript.*') || uploaded_file_names[f.name]) continue;
+    if(!(f.type.match('javascript.*')|| f.type.match('html.*')) || uploaded_file_names[f.name]) continue;
+    console.log('yeahhhhh');
     uploaded_file_names[f.name] = true;
     var reader = new FileReader();
     reader.onload = (function(theFile) {
+      console.log('cool');
+      if(theFile.type === 'text/html') {
+        console.log('here');
+        return function(e) {
+          parseHTML(e.target.result, theFile.name);
+          document.getElementById('list').innerHTML += (theFile.name+'<br />');
+        }
+      }
       return function(e) {
         JSHINT(e.target.result);
         var funcs = JSHINT.data().functions;

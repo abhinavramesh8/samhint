@@ -11,7 +11,10 @@ function clearAll() {
   assgnFile = undefined;
   funcList = {};
   overriden = {};
-  unsafeFuncUses = []
+  unsafeFuncUses = [];
+  setUnsafeUses = [];
+  inlineJSUses = {};
+  csrfArr = [];
   document.getElementById('list').innerHTML = "";
   document.getElementById('check').style.display = "inline";
   document.getElementById('suppress-container').style.display = "inline";

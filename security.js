@@ -78,6 +78,8 @@ function unsafeFinder(ast, src, code) {
           var evalObj = {"name": node.callee.name, "file": src, "line": node.callee.loc.start.line};
           // if(document.getElementById('eval-to-json').checked) makeEvalSafer(node);
           unsafeFuncUses.push(evalObj);
+        } else {
+          checkForSetFunc(node, src, code);
         }
       }
       else if(node.callee.type === 'MemberExpression') {
@@ -106,8 +108,9 @@ function unsafeFinder(ast, src, code) {
 }
 
 function printUnsafe() {
+  var str = "";
   if(unsafeFuncUses.length > 0) {
-    var str = "Warning. The following functions, methods, attributes are unsafe:<br />";
+    str = "Warning. The following functions, methods, attributes are unsafe:<br />";
     str += "<ol>";
     for(var i=0; i<unsafeFuncUses.length; i++) {
       var unsafeObj = unsafeFuncUses[i];
@@ -121,31 +124,89 @@ function printUnsafe() {
       str = str + "</li>";
     }
     str += "</ol>";
-    document.getElementById('list').innerHTML += str;
+  }
+  var inline = false;
+  for(var prop in inlineJSUses) {
+    if(inlineJSUses.hasOwnProperty(prop)) {
+      inline = true;
+      break;
+    }
+  }
+  if(inline) {
+    str += "Warning. The following files contain inline JavaScript. Pls. avoid using inline JS<br />";
+    str += "<ol>";
+    for(var prop in inlineJSUses) {
+      if(inlineJSUses.hasOwnProperty(prop)) {
+        str += "<li>";
+        str += prop;
+        str += "<br />";
+        str = str + "</li>";
+      }
+    }
+    str += "</ol>";
+  }
+  if(setUnsafeUses.length > 0) {
+    str += "Warning. The following functions should only take function expressions as arguments.<br />";
+    str += "<ol>";
+    for(var i=0; i<setUnsafeUses.length; i++) {
+      var unsafeObj = setUnsafeUses[i];
+      str += "<li>";
+      str += unsafeObj.name;
+      str += "<br />";
+      str = str + "File name: " + unsafeObj.file;
+      str += "<br />";
+      str = str + "Line number: " + unsafeObj.line;
+      str += "<br />";
+      str = str + "</li>";
+    }
+    str += "</ol>";
+  }
+  if(csrfArr.length > 0) {
+    console.log('kahooooo');
+    str += "Warning. The following forms lack CSRF tokens.<br />";
+    str += "<ol>";
+    for(var i=0; i<csrfArr.length; i++) {
+      var unsafeObj = csrfArr[i];
+      str += "<li>";
+      str = str + "File name: " + unsafeObj.file;
+      str += "<br />";
+      str = str + "Line number: " + unsafeObj.line;
+      str += "<br />";
+      str = str + "</li>";
+    }
+    str += "</ol>";
+  }
+  document.getElementById('list').innerHTML += str;
 
-    var newFileExists = false;
+  var newFileExists = false;
+  for(var prop in newFiles) {
+    if(newFiles.hasOwnProperty(prop)) {
+      newFileExists = true;
+      break;
+    }
+  }
+  globalNewCode = false;
+  if(newFileExists) {
+    str = "<br /><br />Safer files for downloading: <br /><br />";
     for(var prop in newFiles) {
       if(newFiles.hasOwnProperty(prop)) {
-        newFileExists = true;
-        break;
-      }
-    }
-
-    if(newFileExists) {
-      str = "<br /><br />Safer files for downloading: <br /><br />";
-      for(var prop in newFiles) {
-        if(newFiles.hasOwnProperty(prop)) {
-          //newFiles[prop] = newFiles[prop].replace(/\"/g, '\\"');
-          //newFiles[prop] = newFiles[prop].replace(/\'/g, "\\'");
+        //newFiles[prop] = newFiles[prop].replace(/\"/g, '\\"');
+        //newFiles[prop] = newFiles[prop].replace(/\'/g, "\\'");
+        if(!globalNewCode) {
           globalNewCode = newFiles[prop];
-          // console.log(globalNewCode);
           str += "<button onclick=\"downloadNew(\'" + prop + "\',globalNewCode)\">" + prop + "</button><br /><br />";
         }
+        else {
+          globalVeryNewCode = newFiles[prop];
+          str += "<button onclick=\"downloadNew(\'" + prop + "\',globalVeryNewCode)\">" + prop + "</button><br /><br />";
+        }
+        // console.log(globalNewCode);
+
       }
-      document.getElementById('list').innerHTML += str;
     }
-    console.log('successful');
+    document.getElementById('list').innerHTML += str;
   }
+  console.log('successful');
 
 }
 
